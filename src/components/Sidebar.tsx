@@ -9,6 +9,7 @@ import ExternalLink from "components/ExternalLink";
 import discord from "assets/discord.svg";
 import twitter from "assets/twitter.svg";
 import { TWITTER_URL, DISCORD_URL } from "../constants";
+import Text from "./Text";
 
 const SidebarContainer = styled.div`
   display: flex;
@@ -23,6 +24,7 @@ const LogoContainer = styled.div`
   max-height: 12rem;
   height: 100%;
   margin-top: 2rem;
+  max-width: 20rem;
 `;
 
 const MenuContainer = styled.div`
@@ -65,11 +67,20 @@ const Sidebar = () => {
   return (
     <SidebarContainer>
       <TopContainer>
-        <Link to="/">
-          <LogoContainer>
+        <LogoContainer>
+          <Link to="/">
             <FullLogo />
-          </LogoContainer>
-        </Link>
+          </Link>
+          <a
+            href="https://viaheadline.xyz"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Text size={"sm"} color={"grey"}>
+              Powered by Headline
+            </Text>
+          </a>
+        </LogoContainer>
         <MenuContainer>
           <Link to={"/dashboard"}>
             <SidebarItem

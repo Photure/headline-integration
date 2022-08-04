@@ -673,6 +673,9 @@ const HomePage = () => {
           <Text size="md" color="primary">
             The Decentralized Publishing Platform
           </Text>
+          <Text size="sm" color="grey">
+            Powered By: Unlock
+          </Text>
           <StyledLink to={DASHBOARD_URI}>
             <FooterButton color="primary" variant="contained" size="md">
               Get Started

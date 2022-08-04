@@ -32,9 +32,9 @@ const Routes = () => {
   return (
     <HashRouter>
       <RouteContainer>
-        <Route path="/" element={<HomePage />} />
+        {/* <Route path="/" element={<HomePage />} /> */}
         {/* <Route path="/" element={<DashboardPage />} /> */}
-        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/" element={<DashboardPage />} />
         <Route
           path="/publish"
           element={

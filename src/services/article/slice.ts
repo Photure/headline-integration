@@ -225,6 +225,7 @@ export const updateArticle = createAsyncThunk(
         ...existingArticle,
         ...baseArticle,
       };
+      console.log('updating article', updatedArticle);
       await doc.update(updatedArticle);
       thunkAPI.dispatch(
         articleRegistryActions.update({ ...updatedArticle, text: content })

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import logoWordmark from "assets/logo-wordmark.svg";
+import logoWordmark from "assets/photure - spelled 1.svg";
 
 type Props = {
   className?: string;

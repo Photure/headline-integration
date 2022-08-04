@@ -144,6 +144,7 @@ const FilledProfileCard = ({ profile }: { profile: BasicProfile }) => {
   const [src, setSrc] = useState<string | null>(null);
   useEffect(() => {
     if (profile?.image) {
+      console.log('profile', profile);
       const img = getProfileImg(profile.image);
       setSrc(img);
     }

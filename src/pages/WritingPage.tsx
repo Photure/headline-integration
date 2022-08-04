@@ -124,6 +124,7 @@ const StyledMarkdownEditor = styled(MarkdownEditor)`
   height: 100%;
   @media (max-width: 990px) {
   }
+  margin-bottom: 5.2rem;
 `;
 
 const MarkdownSave = ({

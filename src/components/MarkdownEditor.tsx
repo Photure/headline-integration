@@ -34,6 +34,7 @@ import {
   Toolbar,
   ToolbarItemUnion,
   useRemirror,
+  useRemirrorContext,
 } from "@remirror/react";
 import {
   EditorState,
@@ -44,6 +45,8 @@ import {
 
 import { AllStyledComponent } from "@remirror/styles/emotion";
 import { FloatingLinkToolbar } from "components/EditorEditDialog";
+import { PhotureComponent } from "./PhotureGallery";
+import { SelectedImageType } from "./SelectableImage";
 
 export interface MarkdownEditorProps {
   state: EditorState<GetSchema<Extension>>;
@@ -61,7 +64,7 @@ export const remirrorExtensions = () => [
   new HeadingExtension(),
   new LinkExtension({ autoLink: true }),
   new EmojiExtension(),
-  new ImageExtension(),
+  new ImageExtension({ enableResizing: true }),
   new IframeExtension(),
   new BlockquoteExtension(),
   new BulletListExtension({ enableSpine: true }),
@@ -97,11 +100,51 @@ export const MarkdownEditor: FC<MarkdownEditorProps> = ({
     [placeholder]
   );
 
+  console.log("extensions", extensions);
   const { manager } = useRemirror({
     extensions,
     stringHandler: "markdown",
   });
 
+  // Callback component has to be here to have access to RemirrorContext
+  const PhotureComponentCallback = useCallback(() => {
+    const { setContent, getState } = useRemirrorContext();
+    const getCurrentContent = () => {
+      const state = getState();
+      console.log("content", state?.doc?.toJSON());
+      const jsonState = state?.doc?.toJSON();
+      return jsonState;
+    };
+    const addPhoture = (photo: SelectedImageType) => {
+      const jsonState = getCurrentContent();
+      const stateWithAddedContent = jsonState?.content?.concat(photo);
+      console.log("stateWithAddedContent", stateWithAddedContent);
+      const content = { content: stateWithAddedContent, type: "doc" };
+      return setContent(content);
+    };
+    const removePhoture = (photo: SelectedImageType) => {
+      const jsonState = getCurrentContent();
+      const copyOfContent = [...jsonState?.content];
+      console.log("copyOfContent", copyOfContent);
+      const contentIndexOfPhotoToRemove = copyOfContent.findIndex(
+        (item) => item.content?.[0]?.attrs?.src === photo.content[0].attrs.src
+      );
+      console.log("contentIndexOfPhotoToRemove", contentIndexOfPhotoToRemove);
+      const slicedArray = [
+        ...copyOfContent.slice(0, contentIndexOfPhotoToRemove),
+        ...copyOfContent.slice(contentIndexOfPhotoToRemove + 1),
+      ];
+      console.log("slicedArray", slicedArray);
+      const content = { content: slicedArray, type: "doc" };
+      return setContent(content);
+    };
+    return (
+      <PhotureComponent
+        addPhotoToPublication={addPhoture}
+        removePhotoFromPublication={removePhoture}
+      />
+    );
+  }, []);
   return (
     <AllStyledComponent className={className}>
       <ThemeProvider>
@@ -110,6 +153,7 @@ export const MarkdownEditor: FC<MarkdownEditorProps> = ({
           <EditorComponent />
           <FloatingLinkToolbar />
           {children}
+          <PhotureComponentCallback />
         </Remirror>
       </ThemeProvider>
     </AllStyledComponent>

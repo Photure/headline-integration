@@ -8,6 +8,12 @@ import WalletConnectProvider from "@walletconnect/ethereum-provider";
 import { SnackbarProvider } from "notistack";
 import { styled } from "@mui/material";
 import { IProviderOptions } from "web3modal";
+import {
+  ApolloClient,
+  InMemoryCache,
+  HttpLink,
+  ApolloProvider,
+} from "@apollo/client";
 
 import { CeramicProvider } from "context/CeramicContext";
 import { LitProvider } from "context/LitContext";
@@ -22,6 +28,7 @@ import "./index.css";
 
 // import Inter globally from fontsource
 import "@fontsource/inter/latin.css";
+import { ItemsProvider } from "context/ItemsContext";
 
 const providerOptions: IProviderOptions = {
   walletconnect: {
@@ -72,6 +79,18 @@ const Root = () => {
   );
 };
 
+const httpLink = new HttpLink({
+  uri: "https://api.thegraph.com/subgraphs/name/photure/photure-graph", // TEST_TOKENS_QUERY_ENDPOINT,
+  fetchOptions: {
+    mode: "no-cors",
+  },
+});
+
+const client = new ApolloClient({
+  link: httpLink,
+  cache: new InMemoryCache(),
+});
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
@@ -92,7 +111,11 @@ ReactDOM.render(
             <ThemeProvider theme={theme}>
               <CeramicProvider>
                 <ReakitProvider>
-                  <Root />
+                  <ApolloProvider client={client}>
+                    <ItemsProvider>
+                      <Root />
+                    </ItemsProvider>
+                  </ApolloProvider>
                 </ReakitProvider>
               </CeramicProvider>
             </ThemeProvider>

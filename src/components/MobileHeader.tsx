@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { HeaderContainer } from "components/Layout";
 import FullLogo from "components/FullLogo";
+import Text from "./Text";
 
 const MobileHeaderContainer = styled(HeaderContainer)`
   display: none;
@@ -34,6 +35,9 @@ const MobileHeader = () => {
     <MobileHeaderContainer>
       <LogoContainer>
         <FullLogo />
+        <Text size={"sm"} color={"grey"}>
+          Powered by Headline
+        </Text>
       </LogoContainer>
     </MobileHeaderContainer>
   );

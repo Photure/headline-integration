@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import logo from "assets/logo-full-new.svg";
+import logo from "../assets/photure - spelled 1.svg";
 
 type Props = {
   className?: string;

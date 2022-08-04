@@ -5,3 +5,4 @@ interface Window {
 
 declare module "lit-js-sdk";
 declare module "@alexkeating/lit-js-sdk";
+declare module "react-image-size";
